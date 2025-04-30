@@ -1,0 +1,35 @@
+{
+  "name": "saleor-openedx-storefront",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "fedx-scripts webpack --config ./webpack.dev.config.js --watch",
+    "build": "fedx-scripts webpack --config ./webpack.prod.config.js",
+    "start": "fedx-scripts webpack-dev-server --progress",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@edx/brand": "github:nelc/brand-openedx#open-release/redwood.nelp",
+    "@edx/frontend-component-footer": "npm:@edunext/frontend-component-footer@13.0.4-alpha.1",
+    "@edx/frontend-component-header": "npm:@edunext/frontend-component-header@5.0.2-alpha.1-nelp.7",
+    "@edx/frontend-platform": "npm:@edunext/frontend-platform@^7.1.2-alpha-nelc.1",
+    "graphql": "^16.11.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-router-dom": "6.15.0"
+  },
+  "devDependencies": {
+    "@edx/browserslist-config": "1.2.0",
+    "@eslint/js": "^9.22.0",
+    "@openedx/frontend-build": "github:edunext/frontend-build#ednx-release/css-variables-13.1.4",
+    "@types/react": "^17.0.10",
+    "@types/react-dom": "^17.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.22.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "vite": "^6.3.1"
+  }
+}
