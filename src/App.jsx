@@ -1,7 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useLocation } from 'react-router-dom';
+import Checkout from './components/Checkout/Checkout';
+import Processors from './components/Processors/Processors';
+import './App.css';
 
 const GET_CHECKOUT = gql`
   query GetCheckout($id: ID!) {
@@ -10,46 +12,11 @@ const GET_CHECKOUT = gql`
       lines {
         id
         quantity
-        unitPrice {
-          net {
-            amount
-            currency
-          }
-          gross {
-            amount
-            currency
-          }
-        }
-        totalPrice {
-          net {
-            amount
-            currency
-          }
-          gross {
-            amount
-            currency
-          }
-        }
-        variant {
-          product {
-            name
-            media {
-              alt
-              url(size: 300, format: ORIGINAL)
-            }
-          }
-        }
+        unitPrice { net { amount currency } }
+        totalPrice { net { amount } }
+        variant { product { name media { alt url(size: 300, format: ORIGINAL) } } }
       }
-      totalPrice {
-        net {
-          amount
-          currency
-        }
-        gross {
-          amount
-          currency
-        }
-      }
+      totalPrice { net { amount currency } }
     }
   }
 `;
@@ -58,35 +25,30 @@ export default function App() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const checkoutId = params.get('checkout');
+  const processors = [
+    { id: 'proc1', label: 'Hyperpay', src: `http://local.overhang.io:8000/hyperpay/payment/pay/?checkoutId=${checkoutId}` },
+  ];
+
+  const [activeProc, setActiveProc] = useState(processors[0].id);
 
   const { loading, error, data } = useQuery(GET_CHECKOUT, {
     variables: { id: checkoutId },
     skip: !checkoutId,
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="checkout-loading">Loading...</p>;
+  if (error)   return <p className="checkout-error">Error: {error.message}</p>;
 
-  if (error) return <p>Error: {error.message}</p>;
+  const checkout = data.checkout;
 
   return (
-    <div>
-      {data?.checkout ? (
-        <>
-          <h4>Cart</h4>
-          {data.checkout.lines.map((line) => (
-            <div key={line.id}>
-              <img src={line.variant.product.media[0].url} alt={line.variant.product.media[0].alt} />
-              <p>Product: {line.variant.product.name}</p>
-              <p>Quantity: {line.quantity}</p>
-              <p>Unit Price: {line.unitPrice.net.amount} {line.unitPrice.net.currency}</p>
-              <p>Total Price: {line.totalPrice.net.amount} {line.totalPrice.net.currency}</p>
-            </div>
-          ))}
-          <h3>Total Price: {data.checkout.totalPrice.net.amount} {data.checkout.totalPrice.net.currency}</h3>
-        </>
-      ) : (
-        <p>No checkout found.</p>
-      )}
+    <div className="checkout-container">
+      <Processors
+        processors={processors}
+        activeProc={activeProc}
+        setActiveProc={setActiveProc}
+      />
+      <Checkout checkout={checkout} />
     </div>
   );
 }

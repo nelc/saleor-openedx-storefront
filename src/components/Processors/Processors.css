@@ -1,0 +1,49 @@
+.processors-left {
+  flex: 1;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.processors-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+  padding: 10px;
+  gap: 8px;
+}
+
+.processors-tab-btn {
+  max-width: 160px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background: #eaeaea;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex: none;
+}
+
+.processors-tab-btn.active {
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+}
+
+.processors-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+.processors-title {
+    margin: 4rem 0 2rem 0;
+    font-size: 1.25rem;
+    text-align: center;
+    color: #555;
+  }
