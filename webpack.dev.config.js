@@ -8,11 +8,11 @@ config.resolve.alias = {
   '@src': path.resolve(__dirname, 'src'),
 };
 config.devServer = {
-  port: 18055,
+  port: 3000,
   hot: true,
   historyApiFallback: true,
   allowedHosts: [
-    'local.overhang.io'
+    'saleor-storefront.local.overhang.io'
   ],
 }
 
