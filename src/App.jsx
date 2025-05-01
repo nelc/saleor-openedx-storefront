@@ -26,7 +26,12 @@ export default function App() {
   const params = new URLSearchParams(location.search);
   const checkoutId = params.get('checkout');
   const processors = [
-    { id: 'proc1', label: 'Hyperpay', src: `http://local.overhang.io:8000/hyperpay/payment/pay/?checkoutId=${checkoutId}` },
+    { 
+      id: 'hyperpay',
+      label: 'Hyperpay', 
+      src: `http://local.overhang.io:8000/hyperpay/payment/pay/?checkoutId=${checkoutId}`,
+      logo: 'https://reporting.hyperpay.com/logonew.png',
+    },
   ];
 
   const [activeProc, setActiveProc] = useState(processors[0].id);
