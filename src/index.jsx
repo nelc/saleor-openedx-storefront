@@ -9,10 +9,10 @@ import { APP_READY, subscribe, initialize } from '@edx/frontend-platform';
 import { AppProvider } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
 
-import App from './App';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage.jsx';
+import OrderPage from './pages/OrderPage/OrderPage.jsx';
 import messages from './i18n';
 import './index.scss';
-
 
 const httpLink = createHttpLink({
   uri: 'http://saleor-core.local.overhang.io:18000/graphql/',
@@ -61,8 +61,9 @@ function StoreFrontContainer() {
     <AppProvider>
       <ApolloProvider client={client}>
         <Header />
-        <Routes>  {/* Agregamos Router para la navegación */}
-          <Route path="/checkout" element={<App/>} />  {/* Ruta única a Checkout */}
+        <Routes>
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order" element={<OrderPage />} />
         </Routes>
       </ApolloProvider>
     </AppProvider>

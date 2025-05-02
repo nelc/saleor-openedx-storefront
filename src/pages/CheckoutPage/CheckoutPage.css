@@ -1,0 +1,14 @@
+.checkout-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.loading {
+  padding: 20px;
+}
+
+.error {
+  padding: 20px;
+  color: red;
+}
