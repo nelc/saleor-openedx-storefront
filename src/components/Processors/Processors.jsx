@@ -14,7 +14,6 @@ export default function Processors({ processors, setActiveProc }) {
   return (
     <div className="processors-left">
       <h3 className="processors-title">Choose Payment Option</h3>
-
       <div className="processors-box">
         <div className="processors-tabs">
           {processors.map(proc => (

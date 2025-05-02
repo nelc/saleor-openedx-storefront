@@ -1,14 +1,13 @@
-/* Processors.css */
 .processors-left {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 1rem;
 }
 
 .processors-title {
-  margin: 1rem 0rem 0rem 0rem;
+  margin: 1rem 0 0 0;
   font-size: 1rem;
   text-align: center;
   color: #2c3e50;
@@ -37,23 +36,20 @@
   border-radius: 6px;
   background: #f0f0f0;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s, transform 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .processors-tab-btn:hover {
   background: #e0e0e0;
   transform: translateY(-2px);
 }
-
 .processors-tab-btn.active {
-  background: #747474;;
+  background: #747474;
   box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
   transform: translateY(0);
 }
-
 .processors-tab-btn.active .processors-tab-logo {
   filter: brightness(0) invert(1);
 }
