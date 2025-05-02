@@ -10,6 +10,7 @@ import { AppProvider } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
 
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage.jsx';
+import OrderPage from './pages/OrderPage/OrderPage.jsx';
 import messages from './i18n';
 import './index.scss';
 
@@ -62,6 +63,7 @@ function StoreFrontContainer() {
         <Header />
         <Routes>
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order" element={<OrderPage />} />
         </Routes>
       </ApolloProvider>
     </AppProvider>
