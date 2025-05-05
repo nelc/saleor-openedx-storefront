@@ -14,8 +14,10 @@ import OrderPage from './pages/OrderPage/OrderPage.jsx';
 import messages from './i18n';
 import './index.scss';
 
+const lmsRootUrl = process.env.LMS_ROOT_URL;
+
 const httpLink = createHttpLink({
-  uri: 'http://saleor-core.local.overhang.io:18000/graphql/',
+  uri: process.env.API_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -23,8 +25,11 @@ const authLink = setContext((_, { headers }) => {
 
   if (token === ""){
     const currentUrl = window.location.href;
-    window.location.href = `http://local.overhang.io:8000/saleor/services/authenticate/?next=${encodeURIComponent(currentUrl)}`;
+    window.location.href = `${lmsRootUrl}/saleor/services/authenticate/?next=${encodeURIComponent(currentUrl)}`;
   }
+
+
+process.env.LMS_ROOT_URL
 
   return {
     headers: {
@@ -39,7 +44,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach(({ message, locations, path }) => {
       if (message == "Signature has expired") {
         const currentUrl = window.location.href;
-        window.location.href = `http://local.overhang.io:8000/saleor/services/authenticate/?next=${encodeURIComponent(currentUrl)}`;
+        window.location.href = `${lmsRootUrl}/saleor/services/authenticate/?next=${encodeURIComponent(currentUrl)}`;
       }
     });
   }

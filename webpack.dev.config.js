@@ -12,7 +12,7 @@ config.devServer = {
   hot: true,
   historyApiFallback: true,
   allowedHosts: [
-    'saleor-storefront.local.overhang.io'
+    process.env.SALEOR_STOREFRONT_HOST
   ],
 }
 
