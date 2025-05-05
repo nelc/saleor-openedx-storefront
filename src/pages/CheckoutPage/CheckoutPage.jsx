@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useLocation } from 'react-router-dom';
 import Checkout from '../../components/Checkout/Checkout';
 import Processors from '../../components/Processors/Processors';
 import './CheckoutPage.css';
 import { GET_CHECKOUT } from '../../queries';
+import { PAYMENT_GATEWAY_INITIALIZE } from '../../mutations';
 import { getProcessors } from './utils';
 
 export default function CheckoutPage() {
@@ -13,6 +14,7 @@ export default function CheckoutPage() {
   const checkoutId = params.get('checkout');
 
   const [activeProc, setActiveProc] = useState(null);
+  const [processors, setProcessors] = useState([]);
 
   const { loading, error, data } = useQuery(GET_CHECKOUT, {
     variables: { id: checkoutId },
@@ -20,7 +22,16 @@ export default function CheckoutPage() {
   });
 
   const checkout = data?.checkout;
-  const processors = getProcessors(checkout?.availablePaymentGateways, checkoutId);
+  const [paymentGatewayInitialize, { data2, loading2, error2 }] = useMutation(PAYMENT_GATEWAY_INITIALIZE);
+
+  if (checkout?.availablePaymentGateways && processors.length == 0){
+    const availablePaymentGateways = checkout.availablePaymentGateways;
+    const gatewayIds = availablePaymentGateways.map(gateway => ({ id: gateway.id }))
+    paymentGatewayInitialize({ variables: { id: checkoutId,  paymentGateways: gatewayIds} }).then((result) => {
+      const gatewayConfigs =  result.data.paymentGatewayInitialize.gatewayConfigs;
+      setProcessors(getProcessors(gatewayConfigs, checkoutId));
+    })
+  }
 
   useEffect(() => {
     if (!activeProc && processors.length > 0) {

@@ -1,20 +1,19 @@
-export function getProcessors(gateways, checkoutId) {
-  if (!Array.isArray(gateways)) return [];
+export function getProcessors(gatewayConfigs, checkoutId) {
+  if (!Array.isArray(gatewayConfigs)) return [];
 
-  return gateways.map((gateway) => {
-    const urlConfig = gateway.config.find((c) => c.field === "url");
-    const logoConfig = gateway.config.find((c) => c.field === "logo");
+  return gatewayConfigs.map((gatewayConfig) => {
+    const urlConfig = gatewayConfig.data?.payment_url;
+    const logoConfig = gatewayConfig.data?.payment_button_image;
 
     const defaultUrl = "http://local.overhang.io:8000/hyperpay/payment/pay/";
     const defaultLogo = "https://reporting.hyperpay.com/logonew.png";
 
     return {
-      id: gateway.id,
-      label: gateway.name,
-      src: urlConfig?.value
-        ? `${urlConfig.value}?checkoutId=${checkoutId}`
+      id: gatewayConfig.id,
+      label: gatewayConfig.id,
+      src: urlConfig ? `${urlConfig}?checkoutId=${checkoutId}`
         : `${defaultUrl}?checkoutId=${checkoutId}`,
-      logo: logoConfig?.value || defaultLogo,
+      logo: logoConfig || defaultLogo,
     };
 
   });
